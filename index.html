@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Login</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/auth.css">
+</head>
+<body class="login-page">
+
+    <main class="login-page__container">
+        <header class="login-page__header">
+            <h1 class="login-page__title">Panel de Administración</h1>
+            <p class="login-page__subtitle">Acceso al Portal de Gestión</p>
+        </header>
+
+        <section class="login-page__content">
+            <form id="login-form" class="login-form" novalidate>
+                
+                <div class="login-form__field">
+                    <label for="email" class="login-form__label">Correo Electrónico</label>
+                    <div class="login-form__input-wrapper">
+                        <span class="login-form__icon login-form__icon--email"></span>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="login-form__input" 
+                            placeholder="name@company.com" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="login-form__field">
+                    <label for="password" class="login-form__label">Contraseña</label>
+                    <div class="login-form__input-wrapper">
+                        <span class="login-form__icon login-form__icon--lock"></span>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="login-form__input" 
+                            placeholder="••••••••" 
+                            required
+                        >
+                        <button type="button" id="toggle-password" class="login-form__toggle-visibility" aria-label="Toggle password visibility">
+                            <span class="login-form__icon login-form__icon--eye"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="login-error-message" class="login-form__error-message" aria-live="assertive" hidden></div>
+
+                <button type="submit" id="login-submit" class="login-form__button" disabled>
+                    Iniciar Sesión
+                    <span class="login-form__button-icon"></span>
+                </button>
+
+            </form>
+        </section>
+    </main>
+
+    <footer class="login-page__footer">
+        <p class="login-page__footer-text">Nieves Durán F5 Bootcamp Asturias</p>
+    </footer>
+
+    <script type="module" src="src/scripts/auth.js"></script>
+</body>
+</html>
