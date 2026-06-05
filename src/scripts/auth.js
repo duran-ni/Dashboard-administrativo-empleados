@@ -3,7 +3,7 @@
 // ======================================================================
 
 // Importamos los mecanismos modulares de persistencia de datos en el navegador
-import { setSession, getSession } from './storage.js';
+import { setSession, getSession, clearSession } from './storage.js';
 
 // Elementos contenedores de las vistas principales (SPA)
 const authView = document.getElementById('auth-view');
@@ -15,39 +15,50 @@ const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const submitButton = document.getElementById('login-submit');
 
-// Declaramos la variable que faltaba para pintar los errores
+// Elemento para mostrar mensajes de error en el Login
 const errorMessageArea = document.getElementById('login-error-message');
 
 // Elemento interactivo para alternar la visibilidad de la contraseña
 const togglePasswordButton = document.getElementById('toggle-password');
 
-// Expresión regular estándar para comprobar el formato de un correo
+// Seleccionamos el nuevo botón de Cerrar Sesión ubicado arriba a la derecha 
+const logoutButton = document.getElementById('logout-btn');
+
+// Expresión regular estándar para comprobar el formato de un correo 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// ======================================================================
+// COMPROBACIÓN DE SESIÓN ACTIVA AL CARGAR LA PÁGINA 
+// ======================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const activeSession = getSession();
+    
+    // Si la sesión existe en el localStorage, hacemos el salto directo al Dashboard
+    if (activeSession) {
+        authView.setAttribute('hidden', 'true');
+        dashboardView.removeAttribute('hidden');
+        
+        // Pintamos el email del usuario que recuperamos del almacenamiento local
+        document.getElementById('user-display-email').textContent = activeSession.email;
+    }
+});
 
 // ======================================================================
 // VALIDACIÓN DE CAMPOS EN TIEMPO REAL
 // ======================================================================
 
-/**
- * Revisa el contenido de los inputs para activar o desactivar el botón azul
- */
 function validateFormInputs() {
-    // Verificamos si el texto cumple con la regla matemática del correo electrónico 
     const isEmailValid = EMAIL_REGEX.test(emailInput.value.trim());
-    
-    // Verificamos si la contraseña tiene al menos un carácter escrito 
     const isPasswordFilled = passwordInput.value.length >= 1;
 
-    // Si ambas condiciones se cumplen con éxito, habilitamos el botón de envío
     if (isEmailValid && isPasswordFilled) {
         submitButton.removeAttribute('disabled');
     } else {
-        // Si falla alguna, nos aseguramos de que el botón se mantenga bloqueado
         submitButton.setAttribute('disabled', 'true');
     }
 }
 
-// Escuchamos el evento 'input' en vivo para ejecutar la validación tecla a tecla
 emailInput.addEventListener('input', validateFormInputs);
 passwordInput.addEventListener('input', validateFormInputs);
 
@@ -55,21 +66,12 @@ passwordInput.addEventListener('input', validateFormInputs);
 // MOSTRAR / OCULTAR CONTRASEÑA
 // ======================================================================
 
-/**
- * Alterna el tipo de input del campo de contraseña al pulsar el ojo 
- */
 togglePasswordButton.addEventListener('click', () => {
-    // Averiguamos si el tipo de input actual es oculto ('password')
     const isPasswordType = passwordInput.getAttribute('type') === 'password';
-    
-    // Si es password lo pasamos a text (visible), si no lo regresamos a password (enmascarado)
     passwordInput.setAttribute('type', isPasswordType ? 'text' : 'password');
     
-    // Cambiamos el glifo de Google Fonts según el estado de la visibilidad 
     const eyeIcon = togglePasswordButton.querySelector('.login-form__icon--eye');
     if (eyeIcon) {
-        // Si la contraseña ahora es visible en claro, ponemos el ojo tachado
-        // Si vuelve a estar oculta, restauramos el ojo normal
         eyeIcon.textContent = isPasswordType ? 'visibility_off' : 'visibility';
     }
 });
@@ -78,14 +80,9 @@ togglePasswordButton.addEventListener('click', () => {
 // PROCESO ASÍNCRONO DE AUTENTICACIÓN
 // ======================================================================
 
-/**
- * Captura el envío del formulario para validar las credenciales de forma asíncrona 
- */
 loginForm.addEventListener('submit', async (event) => {
-    // Evitamos que la página se recargue automáticamente (comportamiento nativo)
     event.preventDefault();
     
-    // Limpamos y ocultamos mensajes de error previos antes de un nuevo intento
     errorMessageArea.setAttribute('hidden', 'true');
     errorMessageArea.textContent = '';
 
@@ -93,36 +90,51 @@ loginForm.addEventListener('submit', async (event) => {
     const passwordValue = passwordInput.value;
 
     try {
-        // Realizamos una petición asíncrona HTTP hacia nuestro archivo de configuración local
         const response = await fetch('/config.json');
         
-        // Si el archivo no existe o falla la petición, lanzamos una excepción al bloque catch
         if (!response.ok) {
             throw new Error('No se pudo verificar la configuración de seguridad local.');
         }
 
-        // Procesamos y convertimos la respuesta JSON en un objeto JavaScript legible
         const credentials = await response.json();
 
-        // Evaluamos si lo que escribió el usuario coincide exactamente con el JSON de seguridad 
         if (emailValue === credentials.adminEmail && passwordValue === credentials.adminPassword) {
             
-            // REDIRECCIÓN SPA: Ocultamos el Login y revelamos el Dashboard en la misma página 
+            // Guardamos de forma persistente los datos del usuario en el localStorage 
+            setSession({ email: emailValue });
+
+            // REDIRECCIÓN SPA: Ocultamos el Login y revelamos el Dashboard
             authView.setAttribute('hidden', 'true');
             dashboardView.removeAttribute('hidden');
             
-            // Actualizamos visualmente el email del administrador en la esquina del Dashboard
             document.getElementById('user-display-email').textContent = emailValue;
             
         } else {
-            // CONTROL DE FALLOS: Si no coinciden, mostramos el error genérico 
             errorMessageArea.textContent = 'Correo electrónico o contraseña incorrectos.';
             errorMessageArea.removeAttribute('hidden');
         }
 
     } catch (error) {
-        // Captura de errores críticos del sistema (por ejemplo, si el JSON se rompe o no se encuentra)
         errorMessageArea.textContent = `Error del sistema: ${error.message}`;
         errorMessageArea.removeAttribute('hidden');
     }
+});
+
+// ======================================================================
+// LOGOUT DEL DASHBOARD 
+// ======================================================================
+
+logoutButton.addEventListener('click', () => {
+    // 1. Eliminamos la sesión del almacenamiento local (HU-3 T03)
+    clearSession();
+
+    // 2. Limpiamos los campos del formulario de entrada por seguridad
+    loginForm.reset();
+    
+    // 3. Bloqueamos de nuevo el botón azul
+    submitButton.setAttribute('disabled', 'true');
+
+    // 4. REDIRECCIÓN SPA: Ocultamos el Dashboard y volvemos a mostrar el Login (HU-3 T04)
+    dashboardView.setAttribute('hidden', 'true');
+    authView.removeAttribute('hidden');
 });
