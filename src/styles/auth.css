@@ -1,4 +1,4 @@
-/* Base styles for the login layout */
+/* Estilos base para el diseño de inicio de sesión */
 .login-page {
     margin: 0;
     padding: 0;
@@ -10,7 +10,7 @@
     min-height: 100vh;
 }
 
-/* Main container centering the login box */
+/* Contenedor principal que centra el cuadro de inicio de sesión */
 .login-page__container {
     flex: 1;
     display: flex;
@@ -20,7 +20,7 @@
     padding: 20px;
 }
 
-/* Header section inside login box */
+/* Sección de encabezado dentro del cuadro de inicio de sesión */
 .login-page__header {
     text-align: center;
     margin-bottom: 24px;
@@ -39,7 +39,7 @@
     margin: 0;
 }
 
-/* Form Container Card matching prototype aesthetics */
+/* Tarjeta contenedora de formulario */
 .login-page__content {
     background-color: #ffffff;
     padding: 40px;
@@ -50,7 +50,7 @@
     box-sizing: border-box;
 }
 
-/* Form block layouts */
+/* Diseños de bloques de formulario */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -69,7 +69,7 @@
     color: #334155;
 }
 
-/* Input wrappers to contain standard text and action icons */
+/* Contenedores de entrada para incluir texto estándar e iconos de acción. */
 .login-form__input-wrapper {
     position: relative;
     display: flex;
@@ -94,25 +94,22 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* Placeholder styles styling */
+/* Estilos de marcadores de posición */
 .login-form__input::placeholder {
     color: #94a3b8;
 }
 
-/* Form Icons styling (to be loaded with custom SVG backgrounds later) */
+/* Estilo de los iconos del formulario */
 .login-form__icon {
     position: absolute;
     left: 14px;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    pointer-events: none;
+    font-size: 20px;            /* Controla el tamaño del icono font-size */
+    color: #94a3b8;             /* Controla el color del icono nativamente */
+    pointer-events: none;       /* Evita que interfiera con los clics del input */
+    user-select: none;          /* Evita que el usuario seleccione el icono como texto */
 }
 
-/* Temporary background colors for visual spacing before replacing with SVGs */
+/* Colores de fondo temporales para espaciar visualmente antes de reemplazarlos */
 .login-form__icon--email {
     background-color: #94a3b8; 
     mask: url('../assets/icons/mail.svg') no-repeat center / contain;
@@ -126,13 +123,11 @@
 }
 
 .login-form__icon--eye {
-    background-color: #64748b;
     position: static;
-    mask: url('../assets/icons/eye.svg') no-repeat center / contain;
-    -webkit-mask: url('../assets/icons/eye.svg') no-repeat center / contain;
+    color: #64748b;
 }
 
-/* Interactive password visibility toggle (HU-2 placement) */
+/* Alternador interactivo de visibilidad de contraseña */
 .login-form__toggle-visibility {
     position: absolute;
     right: 12px;
@@ -145,7 +140,7 @@
     justify-content: center;
 }
 
-/* Error message typography block (HU-1 T04) */
+/* Bloque de tipografía de mensaje de error */
 .login-form__error-message {
     font-size: 13px;
     color: #dc2626;
@@ -155,7 +150,7 @@
     border-radius: 6px;
 }
 
-/* Call-to-action blue login button matching the prototype */
+/* Botón azul de inicio de sesión con llamada a la acción */
 .login-form__button {
     width: 100%;
     padding: 14px;
@@ -170,20 +165,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 8px;
+}
+
+.login-form__button-icon {
+    font-size: 18px;
 }
 
 .login-form__button:hover:not(:disabled) {
     background-color: #1d4ed8;
 }
 
-/* State management modifier: Disabled state */
+/* Modificador de gestión de estado: Estado deshabilitado */
 .login-form__button:disabled {
     background-color: #1215cc;
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-/* Sticky footer presentation styling */
+/* Estilo de presentación del pie de página fijo */
 .login-page__footer {
     text-align: center;
     padding: 16px;
