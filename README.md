@@ -44,7 +44,7 @@ En este proyecto se realizaron los siguientes pasos:
 
 **Paso 4:** Estructuración del HTML Unificado (SPA)
 
-**Paso 5:** Comenzar con las Subtareas registradas en Jira
+**Paso 5:** Implementar las Subtareas registradas en Jira
 
 
 #  🛠️ Planificación

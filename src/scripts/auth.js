@@ -2,6 +2,9 @@
 // CONFIGURACIÓN E INICIALIZACIÓN DE ELEMENTOS DEL DOM
 // ======================================================================
 
+// Importamos los mecanismos modulares de persistencia de datos en el navegador
+import { setSession, getSession } from './storage.js';
+
 // Elementos contenedores de las vistas principales (SPA)
 const authView = document.getElementById('auth-view');
 const dashboardView = document.getElementById('dashboard-view');
@@ -11,6 +14,9 @@ const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const submitButton = document.getElementById('login-submit');
+
+// Declaramos la variable que faltaba para pintar los errores
+const errorMessageArea = document.getElementById('login-error-message');
 
 // Elemento interactivo para alternar la visibilidad de la contraseña
 const togglePasswordButton = document.getElementById('toggle-password');

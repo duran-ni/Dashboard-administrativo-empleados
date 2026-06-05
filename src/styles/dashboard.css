@@ -1,11 +1,21 @@
 /* ====================================================================== */
-/* Estilos Base para la Distribución del Dashboard (Layout Principal)     */
+/* Estilos Base y Corrección Crítica SPA                                  */
 /* ====================================================================== */
+
+/* Forzamos que si la vista de autenticación está oculta, no ocupe nada de espacio */
+.login-page[hidden] {
+    display: none !important;
+}
+
+/* Forzamos que si la vista del dashboard está oculta, no ocupe nada de espacio */
+.dashboard[hidden] {
+    display: none !important;
+}
 
 .dashboard {
     display: flex;
     min-height: 100vh;
-    background-color: #f8fafc;
+    background-color: #f1f5f9; /* Color gris claro/azul suave del prototipo */
     color: #0f172a;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -16,15 +26,15 @@
 
 .dashboard__sidebar {
     width: 260px;
-    background-color: #1e293b; /* Color azul pizarra oscuro profesional */
-    color: #ffffff;
+    background-color: #f7f7f8;
+    color: #353333;
     display: flex;
     flex-direction: column;
     padding: 24px 16px;
     box-sizing: border-box;
 }
 
-/* Identidad corporativa de la barra lateral */
+/* Identidad corporativa en dos líneas (NDL arriba, Portal de Gestión abajo) */
 .dashboard__brand {
     display: flex;
     align-items: center;
@@ -34,17 +44,29 @@
 }
 
 .dashboard__brand-icon {
-    font-size: 28px;
-    color: #3b82f6; /* Icono azul brillante */
+    font-size: 32px;
+    color: #3b82f6;
+}
+
+.dashboard__brand-text {
+    display: flex;
+    flex-direction: column;
 }
 
 .dashboard__brand-title {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     margin: 0;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
 }
 
-/* Lista del menú de navegación */
+.dashboard__brand-subtitle {
+    font-size: 12px;
+    color: #3d367c;
+    font-weight: 400;
+}
+
 .dashboard__nav {
     flex: 1;
 }
@@ -64,48 +86,13 @@
     gap: 12px;
     padding: 12px;
     border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
     color: #94a3b8;
 }
 
-.dashboard__menu-item:hover {
-    background-color: #334155;
-    color: #ffffff;
-}
-
-/* Estado activo del botón dentro del menú */
 .dashboard__menu-item--active {
-    background-color: #2563eb;
-    color: #ffffff;
+    background-color: #dfdfe2;
+    color: #0646a0;
     font-weight: 500;
-}
-
-/* Contenedor del botón de salida */
-.dashboard__sidebar-footer {
-    border-top: 1px solid #334155;
-    padding-top: 16px;
-}
-
-.dashboard__logout-btn {
-    width: 100%;
-    background: none;
-    border: none;
-    color: #f1f5f9;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: inherit;
-    transition: background-color 0.2s ease;
-}
-
-.dashboard__logout-btn:hover {
-    background-color: #ef4444; /* Rojo de advertencia al pasar el ratón */
-    color: #ffffff;
 }
 
 /* ====================================================================== */
@@ -116,7 +103,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
+    min-height: 100vh;
 }
 
 /* Barra superior global */
@@ -130,7 +117,6 @@
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* Componente: Caja de búsqueda */
 .dashboard__search-box {
     position: relative;
     display: flex;
@@ -143,7 +129,6 @@
     left: 12px;
     color: #94a3b8;
     font-size: 20px;
-    pointer-events: none;
 }
 
 .dashboard__search-input {
@@ -153,15 +138,15 @@
     border: 1px solid #cbd5e1;
     border-radius: 6px;
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.dashboard__search-input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+/* Contenedor derecho del Header (Perfil + Cerrar Sesión) */
+.dashboard__header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
 
-/* Datos de perfil de usuario administrador */
 .dashboard__user-profile {
     display: flex;
     align-items: center;
@@ -174,26 +159,45 @@
     font-weight: 500;
 }
 
+/* Nuevo diseño del botón Cerrar Sesión en el Header */
+.dashboard__logout-btn {
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.dashboard__logout-btn:hover {
+    background-color: #fee2e2; /* Rojo suave de advertencia */
+    color: #ef4444;
+    border-color: #fca5a5;
+}
+
 /* ====================================================================== */
-/* Área del Cuerpo de Datos (Filtros y Listados)                          */
+/* Área del Cuerpo de Datos                                               */
 /* ====================================================================== */
 
 .dashboard__body {
     padding: 32px;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
 }
 
 .dashboard__body-title {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
-    margin: 0;
+    margin: 0 0 24px 0;
     color: #1e293b;
 }
 
-/* Componente: Filtro Alfabético (Abecedario) */
 .dashboard__alphabet-filter {
     display: flex;
     flex-wrap: wrap;
@@ -202,6 +206,7 @@
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
+    margin-bottom: 24px;
 }
 
 .dashboard__alphabet-btn {
@@ -214,12 +219,6 @@
     border-radius: 4px;
     cursor: pointer;
     min-width: 32px;
-    transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.dashboard__alphabet-btn:hover {
-    background-color: #e2e8f0;
-    color: #0f172a;
 }
 
 .dashboard__alphabet-btn--active {
@@ -227,7 +226,6 @@
     color: #ffffff;
 }
 
-/* Contenedor de la Tabla */
 .dashboard__table-container {
     background-color: #ffffff;
     border-radius: 8px;
@@ -237,7 +235,7 @@
 }
 
 /* ====================================================================== */
-/* Estilos del Componente de la Tabla de Empleados                         */
+/* Tabla de Empleados                                                     */
 /* ====================================================================== */
 
 .employee-table {
@@ -254,44 +252,9 @@
     padding: 14px 20px;
     border-bottom: 1px solid #e2e8f0;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.05em;
 }
-
-.employee-table__tr {
-    transition: background-color 0.15s ease;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.employee-table__tr:hover {
-    background-color: #f8fafc;
-}
-
-.employee-table__td {
-    padding: 16px 20px;
-    color: #334155;
-    vertical-align: middle;
-}
-
-/* Avatar del empleado */
-.employee-table__avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #e2e8f0;
-    display: block;
-}
-
-/* Texto destacado (Nombre completo) */
-.employee-table__name {
-    font-weight: 500;
-    color: #1e293b;
-}
-
-/* ====================================================================== */
-/* Mensajes de Ausencia de Datos                                          */
-/* ====================================================================== */
 
 .dashboard__no-results {
     padding: 48px;
@@ -315,7 +278,25 @@
 }
 
 /* ====================================================================== */
-/* Adaptabilidad (Responsive - Dispositivos Móviles)                      */
+/* Componente: Pie de Página (Footer Requerido)                           */
+/* ====================================================================== */
+
+.dashboard__footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 32px;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer al fondo del contenedor */
+}
+
+.dashboard__footer-text {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* ====================================================================== */
+/* Adaptabilidad (Responsive)                                             */
 /* ====================================================================== */
 
 @media (max-width: 768px) {
@@ -325,11 +306,6 @@
 
     .dashboard__sidebar {
         width: 100%;
-        padding: 16px;
-    }
-
-    .dashboard__brand {
-        margin-bottom: 16px;
     }
 
     .dashboard__header {
@@ -337,19 +313,14 @@
         height: auto;
         padding: 16px;
         gap: 16px;
-        align-items: flex-start;
+    }
+
+    .dashboard__header-right {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .dashboard__search-box {
         width: 100%;
-    }
-
-    .dashboard__body {
-        padding: 16px;
-    }
-
-    /* Transformación adaptativa para la tabla en móviles */
-    .dashboard__table-container {
-        overflow-x: auto;
     }
 }
