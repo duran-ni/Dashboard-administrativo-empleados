@@ -1,0 +1,355 @@
+/* ====================================================================== */
+/* Estilos Base para la Distribución del Dashboard (Layout Principal)     */
+/* ====================================================================== */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ====================================================================== */
+/* Componente: Barra Lateral de Navegación (Sidebar)                      */
+/* ====================================================================== */
+
+.dashboard__sidebar {
+    width: 260px;
+    background-color: #1e293b; /* Color azul pizarra oscuro profesional */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    box-sizing: border-box;
+}
+
+/* Identidad corporativa de la barra lateral */
+.dashboard__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-left: 8px;
+}
+
+.dashboard__brand-icon {
+    font-size: 28px;
+    color: #3b82f6; /* Icono azul brillante */
+}
+
+.dashboard__brand-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Lista del menú de navegación */
+.dashboard__nav {
+    flex: 1;
+}
+
+.dashboard__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard__menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: #94a3b8;
+}
+
+.dashboard__menu-item:hover {
+    background-color: #334155;
+    color: #ffffff;
+}
+
+/* Estado activo del botón dentro del menú */
+.dashboard__menu-item--active {
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Contenedor del botón de salida */
+.dashboard__sidebar-footer {
+    border-top: 1px solid #334155;
+    padding-top: 16px;
+}
+
+.dashboard__logout-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+}
+
+.dashboard__logout-btn:hover {
+    background-color: #ef4444; /* Rojo de advertencia al pasar el ratón */
+    color: #ffffff;
+}
+
+/* ====================================================================== */
+/* Sección de Contenido Principal (Main Workspace)                        */
+/* ====================================================================== */
+
+.dashboard__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Barra superior global */
+.dashboard__header {
+    background-color: #ffffff;
+    height: 70px;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Componente: Caja de búsqueda */
+.dashboard__search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 350px;
+}
+
+.dashboard__search-icon {
+    position: absolute;
+    left: 12px;
+    color: #94a3b8;
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.dashboard__search-input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    font-size: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard__search-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Datos de perfil de usuario administrador */
+.dashboard__user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #475569;
+}
+
+.dashboard__user-email {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ====================================================================== */
+/* Área del Cuerpo de Datos (Filtros y Listados)                          */
+/* ====================================================================== */
+
+.dashboard__body {
+    padding: 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.dashboard__body-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #1e293b;
+}
+
+/* Componente: Filtro Alfabético (Abecedario) */
+.dashboard__alphabet-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.dashboard__alphabet-btn {
+    background-color: #f1f5f9;
+    border: none;
+    color: #475569;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 32px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dashboard__alphabet-btn:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.dashboard__alphabet-btn--active {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+/* Contenedor de la Tabla */
+.dashboard__table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+}
+
+/* ====================================================================== */
+/* Estilos del Componente de la Tabla de Empleados                         */
+/* ====================================================================== */
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.employee-table__th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+}
+
+.employee-table__tr {
+    transition: background-color 0.15s ease;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.employee-table__tr:hover {
+    background-color: #f8fafc;
+}
+
+.employee-table__td {
+    padding: 16px 20px;
+    color: #334155;
+    vertical-align: middle;
+}
+
+/* Avatar del empleado */
+.employee-table__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e2e8f0;
+    display: block;
+}
+
+/* Texto destacado (Nombre completo) */
+.employee-table__name {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+/* ====================================================================== */
+/* Mensajes de Ausencia de Datos                                          */
+/* ====================================================================== */
+
+.dashboard__no-results {
+    padding: 48px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.dashboard__no-results-icon {
+    font-size: 48px;
+    color: #94a3b8;
+}
+
+.dashboard__no-results-text {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ====================================================================== */
+/* Adaptabilidad (Responsive - Dispositivos Móviles)                      */
+/* ====================================================================== */
+
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .dashboard__sidebar {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .dashboard__brand {
+        margin-bottom: 16px;
+    }
+
+    .dashboard__header {
+        flex-direction: column;
+        height: auto;
+        padding: 16px;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .dashboard__search-box {
+        width: 100%;
+    }
+
+    .dashboard__body {
+        padding: 16px;
+    }
+
+    /* Transformación adaptativa para la tabla en móviles */
+    .dashboard__table-container {
+        overflow-x: auto;
+    }
+}
