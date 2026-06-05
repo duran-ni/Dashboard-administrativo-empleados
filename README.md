@@ -20,26 +20,36 @@ A nivel técnico, la aplicación valida las credenciales en el cliente y utiliza
 
 # 📦 Instalación
 
-Los pasos en el proceso de instalación son los siguientes:
+En este proyecto se realizaron los siguientes pasos:
 
-* **1-** Clonar el repositorio.
-* **2-** Instalar el entorno de dependencias y ejecutar las herramientas de desarrollo.
-* **3-** Testing.
+## Clonar el repositorio.
+* **1-** git clone https://github.com/duran-ni/Dashboard-administrativo-empleados.git
+* **2-** cd Dashboard-administrativo-empleados
+* **3-** code .
+## Inicialización del proyecto e Instalación de Dependencias
+* **1-** npm init -y
+* **2-** npm install -D vitest
+* **3-** npm init playwright@latest  
+## Creación de la Estructura de Carpetas
+* **1-** mkdir -p src/assets/icons src/styles src/scripts
+* **2-** touch index.html dashboard.html config.json src/styles/main.css src/styles/auth.css 
+* **3-** src/styles/dashboard.css src/scripts/auth.js src/scripts/api.js src/scripts/storage.js src/scripts/ui.js
 
-**Paso 1:** Clonar el repositorio remoto
+## Ejecutar Proyecto
+**Paso 1:** Implementación de HTML del Login 
 
-**Paso 2:** Acceder al directorio raíz del proyecto
+**Paso 2:** Implementación de Estilos CSS del Login
 
-**Paso 3:** Instalar las dependencias del ecosistema
+**Paso 3:** Borrar carpeta Dashboard con el comando: rm dashboard.html
 
-**Paso 4:** Levantar el entorno de desarrollo local
+**Paso 4:** Estructuración del HTML Unificado (SPA)
 
-**Paso 5:** Ejecutar la suite de pruebas automatizadas
+**Paso 5:** Comenzar con las Subtareas registradas en Jira
 
 
 #  🛠️ Planificación
 
-# 📖 Historias de Usuario y Criterios de Aceptación
+# 📋 Historias de Usuario y Criterios de Aceptación
 
 
 
