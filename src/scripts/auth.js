@@ -67,3 +67,56 @@ togglePasswordButton.addEventListener('click', () => {
         eyeIcon.textContent = isPasswordType ? 'visibility_off' : 'visibility';
     }
 });
+
+// ======================================================================
+// PROCESO ASÍNCRONO DE AUTENTICACIÓN
+// ======================================================================
+
+/**
+ * Captura el envío del formulario para validar las credenciales de forma asíncrona 
+ */
+loginForm.addEventListener('submit', async (event) => {
+    // Evitamos que la página se recargue automáticamente (comportamiento nativo)
+    event.preventDefault();
+    
+    // Limpamos y ocultamos mensajes de error previos antes de un nuevo intento
+    errorMessageArea.setAttribute('hidden', 'true');
+    errorMessageArea.textContent = '';
+
+    const emailValue = emailInput.value.trim();
+    const passwordValue = passwordInput.value;
+
+    try {
+        // Realizamos una petición asíncrona HTTP hacia nuestro archivo de configuración local
+        const response = await fetch('/config.json');
+        
+        // Si el archivo no existe o falla la petición, lanzamos una excepción al bloque catch
+        if (!response.ok) {
+            throw new Error('No se pudo verificar la configuración de seguridad local.');
+        }
+
+        // Procesamos y convertimos la respuesta JSON en un objeto JavaScript legible
+        const credentials = await response.json();
+
+        // Evaluamos si lo que escribió el usuario coincide exactamente con el JSON de seguridad 
+        if (emailValue === credentials.adminEmail && passwordValue === credentials.adminPassword) {
+            
+            // REDIRECCIÓN SPA: Ocultamos el Login y revelamos el Dashboard en la misma página 
+            authView.setAttribute('hidden', 'true');
+            dashboardView.removeAttribute('hidden');
+            
+            // Actualizamos visualmente el email del administrador en la esquina del Dashboard
+            document.getElementById('user-display-email').textContent = emailValue;
+            
+        } else {
+            // CONTROL DE FALLOS: Si no coinciden, mostramos el error genérico 
+            errorMessageArea.textContent = 'Correo electrónico o contraseña incorrectos.';
+            errorMessageArea.removeAttribute('hidden');
+        }
+
+    } catch (error) {
+        // Captura de errores críticos del sistema (por ejemplo, si el JSON se rompe o no se encuentra)
+        errorMessageArea.textContent = `Error del sistema: ${error.message}`;
+        errorMessageArea.removeAttribute('hidden');
+    }
+});
