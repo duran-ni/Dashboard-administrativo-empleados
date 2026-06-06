@@ -96,101 +96,129 @@
     </div>
 
     <div id="dashboard-view" class="dashboard" hidden>
-            
-            <aside class="dashboard__sidebar">
-                <div class="dashboard__brand">
-                    <span class="dashboard__brand-icon material-symbols-outlined">badge</span>
-                    <div class="dashboard__brand-text">
-                        <h2 class="dashboard__brand-title">NDL</h2>
-                        <span class="dashboard__brand-subtitle">Portal de Gestión</span>
-                    </div>
-                </div>
-
-                <nav class="dashboard__nav">
-                    <ul class="dashboard__menu">
-                        <li class="dashboard__menu-item dashboard__menu-item--active">
-                            <span class="material-symbols-outlined">group</span>
-                            <span>Empleados</span>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-
-            <main class="dashboard__content">
-                
-                <header class="dashboard__header">
-                    <div class="dashboard__search-box">
-                        <span class="dashboard__search-icon material-symbols-outlined">search</span>
-                        <input type="text" class="dashboard__search-input" placeholder="Buscar empleado por nombre...">
-                    </div>
-                    
-                    <div class="dashboard__header-right">
-                        <div class="dashboard__user-profile">                           
-                        </div>
-                        <button id="logout-btn" class="dashboard__logout-btn">                           
-                            <span>Cerrar Sesión</span>
-                        </button>
-                    </div>
-                </header>
-
-                <section class="dashboard__body">
-                    <h1 class="dashboard__body-title">Listado de Empleados</h1>
-
-                    <div class="dashboard__alphabet-filter">
-                        <button class="dashboard__alphabet-btn dashboard__alphabet-btn--active">Todos</button>
-                        <button class="dashboard__alphabet-btn">A</button>
-                        <button class="dashboard__alphabet-btn">B</button>
-                        <button class="dashboard__alphabet-btn">C</button>
-                        <button class="dashboard__alphabet-btn">D</button>
-                        <button class="dashboard__alphabet-btn">E</button>
-                        <button class="dashboard__alphabet-btn">F</button>
-                        <button class="dashboard__alphabet-btn">G</button>
-                        <button class="dashboard__alphabet-btn">H</button>
-                        <button class="dashboard__alphabet-btn">I</button>
-                        <button class="dashboard__alphabet-btn">J</button>
-                        <button class="dashboard__alphabet-btn">K</button>
-                        <button class="dashboard__alphabet-btn">L</button>
-                        <button class="dashboard__alphabet-btn">M</button>
-                        <button class="dashboard__alphabet-btn">N</button>
-                        <button class="dashboard__alphabet-btn">O</button>
-                        <button class="dashboard__alphabet-btn">P</button>
-                        <button class="dashboard__alphabet-btn">Q</button>
-                        <button class="dashboard__alphabet-btn">R</button>
-                        <button class="dashboard__alphabet-btn">S</button>
-                        <button class="dashboard__alphabet-btn">T</button>
-                        <button class="dashboard__alphabet-btn">U</button>
-                        <button class="dashboard__alphabet-btn">V</button>
-                        <button class="dashboard__alphabet-btn">W</button>
-                        <button class="dashboard__alphabet-btn">X</button>
-                        <button class="dashboard__alphabet-btn">Y</button>
-                        <button class="dashboard__alphabet-btn">Z</button>
-                    </div>
-
-                    <div class="dashboard__table-container">
-                        <table class="employee-table">
-                            <thead class="employee-table__head">
-                                <tr>
-                                    <th class="employee-table__th">Nombre Completo</th>
-                                    <th class="employee-table__th">Email</th>
-                                    <th class="employee-table__th">Calle</th>
-                                    <th class="employee-table__th">Suite</th>
-                                    <th class="employee-table__th">Ciudad</th>
-                                    <th class="employee-table__th">Código Postal</th>                               
-                                </tr>
-                            </table>
-
-                            <div class="dashboard__no-results">
-                                <span class="dashboard__no-results-icon material-symbols-outlined">person_search</span>
-                                <p class="dashboard__no-results-text">No se encontraron empleados que coincidan con el criterio de búsqueda.</p>
-                            </div>
-                    </div>
-                </section>
-
-                <footer class="dashboard__footer">
-                    <p class="dashboard__footer-text">Nieves Durán F5 Bootcamp Asturias</p>
-                </footer>
-            </main>
+      <aside class="dashboard__sidebar">
+        <div class="dashboard__brand">
+          <span class="dashboard__brand-icon material-symbols-outlined"
+            >badge</span
+          >
+          <div class="dashboard__brand-text">
+            <h2 class="dashboard__brand-title">NDL</h2>
+            <span class="dashboard__brand-subtitle">Portal de Gestión</span>
+          </div>
         </div>
+
+        <nav class="dashboard__nav">
+          <ul class="dashboard__menu">
+            <li class="dashboard__menu-item dashboard__menu-item--active">
+              <span class="material-symbols-outlined">group</span>
+              <span>Empleados</span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="dashboard__content">
+        <header class="dashboard__header">
+          <div class="dashboard__search-box">
+            <span class="dashboard__search-icon material-symbols-outlined"
+              >search</span
+            >
+            <input
+              type="text"
+              class="dashboard__search-input"
+              placeholder="Buscar empleado por nombre..."
+            />
+          </div>
+
+          <div class="dashboard__header-right">
+            <div class="dashboard__user-profile">
+              <span
+                id="user-display-email"
+                class="dashboard__user-email"
+              ></span>
+            </div>
+            <button id="logout-btn" class="dashboard__logout-btn">
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        </header>
+
+        <section class="dashboard__body">
+          <h1 class="dashboard__body-title">Listado de Empleados</h1>
+
+          <div class="dashboard__alphabet-filter">
+            <button
+              class="dashboard__alphabet-btn dashboard__alphabet-btn--active"
+            >
+              Todos
+            </button>
+            <button class="dashboard__alphabet-btn">A</button>
+            <button class="dashboard__alphabet-btn">B</button>
+            <button class="dashboard__alphabet-btn">C</button>
+            <button class="dashboard__alphabet-btn">D</button>
+            <button class="dashboard__alphabet-btn">E</button>
+            <button class="dashboard__alphabet-btn">F</button>
+            <button class="dashboard__alphabet-btn">G</button>
+            <button class="dashboard__alphabet-btn">H</button>
+            <button class="dashboard__alphabet-btn">I</button>
+            <button class="dashboard__alphabet-btn">J</button>
+            <button class="dashboard__alphabet-btn">K</button>
+            <button class="dashboard__alphabet-btn">L</button>
+            <button class="dashboard__alphabet-btn">M</button>
+            <button class="dashboard__alphabet-btn">N</button>
+            <button class="dashboard__alphabet-btn">O</button>
+            <button class="dashboard__alphabet-btn">P</button>
+            <button class="dashboard__alphabet-btn">Q</button>
+            <button class="dashboard__alphabet-btn">R</button>
+            <button class="dashboard__alphabet-btn">S</button>
+            <button class="dashboard__alphabet-btn">T</button>
+            <button class="dashboard__alphabet-btn">U</button>
+            <button class="dashboard__alphabet-btn">V</button>
+            <button class="dashboard__alphabet-btn">W</button>
+            <button class="dashboard__alphabet-btn">X</button>
+            <button class="dashboard__alphabet-btn">Y</button>
+            <button class="dashboard__alphabet-btn">Z</button>
+          </div>
+
+          <div class="dashboard__table-container">
+            <table class="employee-table">
+              <thead class="employee-table__head">
+                <tr>
+                  <th class="employee-table__th">Nombre Completo</th>
+                  <th class="employee-table__th">Email</th>
+                  <th class="employee-table__th">Calle</th>
+                  <th class="employee-table__th">Suite</th>
+                  <th class="employee-table__th">Ciudad</th>
+                  <th class="employee-table__th">Código Postal</th>
+                </tr>
+              </thead>
+
+              <tbody id="employee-table-body"></tbody>
+            </table>
+
+            <div
+              id="no-results-message"
+              class="dashboard__no-results"
+              style="display: none"
+            >
+              <span class="dashboard__no-results-icon material-symbols-outlined"
+                >person_search</span
+              >
+              <p class="dashboard__no-results-text">
+                No se encontraron empleados que coincidan con el criterio de
+                búsqueda.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="dashboard__footer">
+          <p class="dashboard__footer-text">
+            Nieves Durán F5 Bootcamp Asturias
+          </p>
+        </footer>
+      </main>
+    </div>
 
     <script type="module" src="src/scripts/auth.js"></script>
   </body>

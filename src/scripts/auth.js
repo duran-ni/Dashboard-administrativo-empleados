@@ -2,8 +2,12 @@
 // CONFIGURACIÓN E INICIALIZACIÓN DE ELEMENTOS DEL DOM
 // ======================================================================
 
+
 // Importamos los mecanismos modulares de persistencia de datos en el navegador
 import { setSession, getSession, clearSession } from './storage.js';
+// Importación del servicio de empleados para la consulta asíncrona
+import { fetchEmployeesData } from './employee-service.js';
+
 
 // Elementos contenedores de las vistas principales (SPA)
 const authView = document.getElementById('auth-view');
@@ -24,6 +28,9 @@ const togglePasswordButton = document.getElementById('toggle-password');
 // Seleccionamos el nuevo botón de Cerrar Sesión ubicado arriba a la derecha 
 const logoutButton = document.getElementById('logout-btn');
 
+// Selector para el contenedor donde se inyectarán las filas de los empleados
+const employeeTableBody = document.getElementById('employee-table-body');
+
 // Expresión regular estándar para comprobar el formato de un correo 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -38,11 +45,62 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeSession) {
         authView.setAttribute('hidden', 'true');
         dashboardView.removeAttribute('hidden');
+
+        // Almacenamos el elemento en una variable de control
+        const userEmailDisplay = document.getElementById('user-display-email');
         
-        // Pintamos el email del usuario que recuperamos del almacenamiento local
-        document.getElementById('user-display-email').textContent = activeSession.email;
+        // Ejecutamos la inserción de texto únicamente si el nodo existe en el DOM
+        if (userEmailDisplay) {
+            userEmailDisplay.textContent = activeSession.email;
+        }
+        
+        // Disparamos la carga automática de empleados (¡ahora se ejecutará sin trabas!)
+        loadAndRenderEmployees();
     }
 });
+
+/**
+ * Recupera los registros de empleados de forma asíncrona y los pinta en la tabla del DOM.
+ */
+async function loadAndRenderEmployees() {
+    // Si no existe el contenedor de la tabla en la vista actual, abortamos para evitar errores
+    if (!employeeTableBody) return;
+
+    try {
+        // Invocamos el servicio asíncronamente para obtener el array de empleados
+        const employees = await fetchEmployeesData();
+        
+        // Limpiamos cualquier contenido previo que hubiera en la tabla
+        employeeTableBody.innerHTML = '';
+        
+        // Recorremos el array de empleados mediante un bucle para construir las filas dinámicamente
+        employees.forEach(employee => {
+            const tableRow = document.createElement('tr');
+            
+            // Estructuramos las celdas inyectando la clase oficial de tu maquetación
+            tableRow.innerHTML = `
+                <td class="employee-table__td">${employee.name}</td>
+                <td class="employee-table__td">${employee.email}</td>
+                <td class="employee-table__td">${employee.address.street}</td>
+                <td class="employee-table__td">${employee.address.suite}</td>
+                <td class="employee-table__td">${employee.address.city}</td>
+                <td class="employee-table__td">${employee.address.zipcode}</td>
+            `;
+            
+            // Inyectamos la fila completada dentro del cuerpo de la tabla en el DOM
+            employeeTableBody.appendChild(tableRow);
+        });
+        
+    } catch (error) {
+        employeeTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" style="color: red; text-align: center; padding: 15px;">
+                    Fallo al cargar la lista de empleados: ${error.message}
+                </td>
+            </tr>
+        `;
+    }
+}
 
 // ======================================================================
 // VALIDACIÓN DE CAMPOS EN TIEMPO REAL
@@ -98,16 +156,19 @@ loginForm.addEventListener('submit', async (event) => {
 
         const credentials = await response.json();
 
-        if (emailValue === credentials.adminEmail && passwordValue === credentials.adminPassword) {
-            
-            // Guardamos de forma persistente los datos del usuario en el localStorage 
+      if (emailValue === credentials.adminEmail && passwordValue === credentials.adminPassword) {
             setSession({ email: emailValue });
-
-            // REDIRECCIÓN SPA: Ocultamos el Login y revelamos el Dashboard
             authView.setAttribute('hidden', 'true');
             dashboardView.removeAttribute('hidden');
+
+            // 🟢 Blindaje de seguridad idéntico para el inicio de sesión manual
+            const userEmailDisplay = document.getElementById('user-display-email');
+            if (userEmailDisplay) {
+                userEmailDisplay.textContent = emailValue;
+            }
             
-            document.getElementById('user-display-email').textContent = emailValue;
+            // Disparamos la carga automática de empleados tras la validación de credenciales
+            loadAndRenderEmployees();
             
         } else {
             errorMessageArea.textContent = 'Correo electrónico o contraseña incorrectos.';
