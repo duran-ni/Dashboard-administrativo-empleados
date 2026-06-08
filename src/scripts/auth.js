@@ -60,11 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Recupera los registros de empleados de forma asíncrona y los pinta en la tabla del DOM.
+ * Recupera los registros de empleados de forma asíncrona y gestiona los estados de la interfaz.
  */
 async function loadAndRenderEmployees() {
-    // Si no existe el contenedor de la tabla en la vista actual, abortamos para evitar errores
     if (!employeeTableBody) return;
+
+    // Selectores para alternar el estado vacío (Empty State)
+    const noResultsMessage = document.getElementById('no-results-message');
+    const employeeTable = document.querySelector('.employee-table');
 
     try {
         // Invocamos el servicio asíncronamente para obtener el array de empleados
@@ -72,6 +75,17 @@ async function loadAndRenderEmployees() {
         
         // Limpiamos cualquier contenido previo que hubiera en la tabla
         employeeTableBody.innerHTML = '';
+        
+        // Control condicional de visualización si no existen registros
+        if (!employees || employees.length === 0) {
+            if (employeeTable) employeeTable.style.display = 'none';
+            if (noResultsMessage) noResultsMessage.style.display = 'flex';
+            return;
+        }
+
+        // Si hay registros, nos aseguramos de mostrar la tabla y ocultar el mensaje informativo
+        if (employeeTable) employeeTable.style.display = 'table';
+        if (noResultsMessage) noResultsMessage.style.display = 'none';
         
         // Recorremos el array de empleados mediante un bucle para construir las filas dinámicamente
         employees.forEach(employee => {
@@ -92,9 +106,10 @@ async function loadAndRenderEmployees() {
         });
         
     } catch (error) {
+        if (employeeTable) employeeTable.style.display = 'table';
         employeeTableBody.innerHTML = `
             <tr>
-                <td colspan="6" style="color: red; text-align: center; padding: 15px;">
+                <td colspan="6" style="color: red; text-align: center; padding: 15px; font-weight: bold;">
                     Fallo al cargar la lista de empleados: ${error.message}
                 </td>
             </tr>

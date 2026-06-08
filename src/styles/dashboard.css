@@ -227,11 +227,13 @@
 }
 
 .dashboard__table-container {
-    background-color: #ffffff;
+    width: 100%;
+    overflow-x: auto;                  /* Activa el scroll horizontal si la tabla no cabe */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en dispositivos móviles táctiles */
+    background: #ffffff;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
 }
 
 /* ====================================================================== */
@@ -240,9 +242,8 @@
 
 .employee-table {
     width: 100%;
+    min-width: 750px;                  /* Forzamos un ancho mínimo para que las 6 columnas mantengan su legibilidad perfecta en pantallas pequeñas */
     border-collapse: collapse;
-    text-align: left;
-    font-size: 14px;
 }
 
 .employee-table__th {
