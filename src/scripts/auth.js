@@ -7,7 +7,7 @@
 import { setSession, getSession, clearSession } from './storage.js';
 // Importación del servicio de empleados para la consulta asíncrona
 import { fetchEmployeesData } from './employee-service.js';
-import { setFilteringData, initializeAlphabetFilters } from './filters.js';
+import { setFilteringData, initializeAlphabetFilters, initializeTextSearch } from './filters.js';
 
 
 // Elementos contenedores de las vistas principales (SPA)
@@ -94,7 +94,10 @@ async function loadAndRenderEmployees() {
         /* Inicializamos los botones enviando la función que dibuja las filas como callback */
         initializeAlphabetFilters(renderEmployeeRows);
 
-        /* HU-4 T04: Lanzamos el pintado automático de los empleados iniciales */
+        /* Inicializamos la escucha del buscador de texto en tiempo real */
+        initializeTextSearch(renderEmployeeRows);
+
+        /* Lanzamos el pintado automático de los empleados iniciales */
         renderEmployeeRows(employees);
 
     } catch (error) {
