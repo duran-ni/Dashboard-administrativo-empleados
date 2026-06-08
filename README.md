@@ -46,6 +46,8 @@ En este proyecto se realizaron los siguientes pasos:
 
 **Paso 5:** Implementar las Subtareas registradas en Jira
 
+**Paso 6:** Vitest
+
 
 #  🛠️ Planificación
 

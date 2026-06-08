@@ -125,3 +125,25 @@ function toggleEmptyStateMessage(showBanner) {
         tableElement.style.display = 'table';
     }
 }
+
+/**
+ * Lógica pura de filtrado
+ * @param {Array} lista - Array de empleados
+ * @param {string} letra - Letra del filtro alfabético
+ * @param {string} texto - Texto del buscador
+ */
+export function aplicarFiltros(lista, letra, texto) {
+    return lista.filter(employee => {
+        const matchesLetter = letra === 'ALL' || employee.name.toUpperCase().startsWith(letra.toUpperCase());
+        const matchesText = texto.toLowerCase() === '' || employee.name.toLowerCase().includes(texto.toLowerCase());
+        return matchesLetter && matchesText;
+    });
+}
+
+export function filtrarEmpleados(lista, letra, texto) {
+    return lista.filter(empleado => {
+        const coincideLetra = letra === 'ALL' || empleado.name.toUpperCase().startsWith(letra.toUpperCase());
+        const coincideTexto = texto === '' || empleado.name.toLowerCase().includes(texto.toLowerCase());
+        return coincideLetra && coincideTexto;
+    });
+}
