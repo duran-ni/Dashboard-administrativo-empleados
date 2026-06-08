@@ -325,3 +325,55 @@
         width: 100%;
     }
 }
+
+/* ======================================================================
+   COMPONENTE DE FILTROS ALFABÉTICOS 
+   ====================================================================== */
+
+.employee-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Contenedor flexible para albergar todos los botones de letras */
+.employee-filters__alphabet {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Estilo base de los botones individuales de las letras */
+.employee-filters__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151; /* Gris oscuro para el texto */
+    background-color: #f3f4f6; /* Gris claro para el fondo */
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Cambio de color interactivo al pasar el ratón por encima */
+.employee-filters__btn:hover {
+    background-color: #e5e7eb;
+}
+
+/* Modificador BEM para destacar visualmente la letra activa (HU-5 T01) */
+.employee-filters__btn--active {
+    color: #ffffff;
+    background-color: #2563eb; /* Azul corporativo */
+    border-color: #2563eb;
+}
+
+/* Efecto hover sobre el botón que ya está seleccionado */
+.employee-filters__btn--active:hover {
+    background-color: #1d4ed8;
+}

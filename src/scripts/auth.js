@@ -7,6 +7,7 @@
 import { setSession, getSession, clearSession } from './storage.js';
 // Importación del servicio de empleados para la consulta asíncrona
 import { fetchEmployeesData } from './employee-service.js';
+import { setFilteringData, initializeAlphabetFilters } from './filters.js';
 
 
 // Elementos contenedores de las vistas principales (SPA)
@@ -64,55 +65,46 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 async function loadAndRenderEmployees() {
     if (!employeeTableBody) return;
-
-    // Selectores para alternar el estado vacío (Empty State)
+    /* Selectores para alternar el estado vacío (Empty State) */
     const noResultsMessage = document.getElementById('no-results-message');
     const employeeTable = document.querySelector('.employee-table');
-
     try {
-        // Invocamos el servicio asíncronamente para obtener el array de empleados
+        /* Invocamos el servicio asíncronamente para obtener el array de empleados */
         const employees = await fetchEmployeesData();
-        
-        // Limpiamos cualquier contenido previo que hubiera en la tabla
+
+        /* Limpiamos cualquier contenido previo que hubiera en la tabla */
         employeeTableBody.innerHTML = '';
-        
-        // Control condicional de visualización si no existen registros
+
+        /* Control condicional de visualización si no existen registros */
         if (!employees || employees.length === 0) {
             if (employeeTable) employeeTable.style.display = 'none';
             if (noResultsMessage) noResultsMessage.style.display = 'flex';
             return;
         }
-
-        // Si hay registros, nos aseguramos de mostrar la tabla y ocultar el mensaje informativo
+        /* Si hay registros, nos aseguramos de mostrar la tabla y ocultar el mensaje informativo */
         if (employeeTable) employeeTable.style.display = 'table';
         if (noResultsMessage) noResultsMessage.style.display = 'none';
+
+        /* ======================================================================
+           CONEXIÓN CON EL MÓDULO DE FILTRADO (HU-05)
+           ====================================================================== */
+        /* Pasamos los datos cargados al módulo de filtros para guardarlos en caché */
+        setFilteringData(employees);
         
-        // Recorremos el array de empleados mediante un bucle para construir las filas dinámicamente
-        employees.forEach(employee => {
-            const tableRow = document.createElement('tr');
-            
-            // Estructuramos las celdas inyectando la clase oficial de tu maquetación
-            tableRow.innerHTML = `
-                <td class="employee-table__td">${employee.name}</td>
-                <td class="employee-table__td">${employee.email}</td>
-                <td class="employee-table__td">${employee.address.street}</td>
-                <td class="employee-table__td">${employee.address.suite}</td>
-                <td class="employee-table__td">${employee.address.city}</td>
-                <td class="employee-table__td">${employee.address.zipcode}</td>
-            `;
-            
-            // Inyectamos la fila completada dentro del cuerpo de la tabla en el DOM
-            employeeTableBody.appendChild(tableRow);
-        });
-        
+        /* Inicializamos los botones enviando la función que dibuja las filas como callback */
+        initializeAlphabetFilters(renderEmployeeRows);
+
+        /* HU-4 T04: Lanzamos el pintado automático de los empleados iniciales */
+        renderEmployeeRows(employees);
+
     } catch (error) {
         if (employeeTable) employeeTable.style.display = 'table';
         employeeTableBody.innerHTML = `
-            <tr>
-                <td colspan="6" style="color: red; text-align: center; padding: 15px; font-weight: bold;">
-                    Fallo al cargar la lista de empleados: ${error.message}
-                </td>
-            </tr>
+        <tr>
+        <td colspan="6" style="color: red; text-align: center; padding: 15px; font-weight: bold;">
+        Fallo al cargar la lista de empleados: ${error.message}
+        </td>
+        </tr>
         `;
     }
 }
@@ -214,3 +206,37 @@ logoutButton.addEventListener('click', () => {
     dashboardView.setAttribute('hidden', 'true');
     authView.removeAttribute('hidden');
 });
+
+// ======================================================================
+// RENDERIZADO DINÁMICO DE FILAS (MÓDULO DE INTERFAZ)
+// ======================================================================
+
+/**
+ * Se encarga exclusivamente de limpiar el contenedor y pintar las filas en el DOM
+ * @param {Array<Object>} employeesList - Subconjunto o lista de empleados a dibujar
+ * @returns {void}
+ */
+function renderEmployeeRows(employeesList) {
+    if (!employeeTableBody) return;
+    
+    /* Vaciamos el cuerpo de la tabla para no acumular filas duplicadas */
+    employeeTableBody.innerHTML = '';
+    
+    /* Recorremos la lista que nos llega (ya sea filtrada o completa) para crear la interfaz */
+    employeesList.forEach(employee => {
+        const tableRow = document.createElement('tr');
+        
+        /* Estructuramos las celdas inyectando la clase oficial de tu maquetación */
+        tableRow.innerHTML = `
+        <td class="employee-table__td">${employee.name}</td>
+        <td class="employee-table__td">${employee.email}</td>
+        <td class="employee-table__td">${employee.address.street}</td>
+        <td class="employee-table__td">${employee.address.suite}</td>
+        <td class="employee-table__td">${employee.address.city}</td>
+        <td class="employee-table__td">${employee.address.zipcode}</td>
+        `;
+        
+        /* Inyectamos la fila completada dentro del cuerpo de la tabla en el DOM */
+        employeeTableBody.appendChild(tableRow);
+    });
+}
