@@ -86,7 +86,7 @@ async function loadAndRenderEmployees() {
         if (noResultsMessage) noResultsMessage.style.display = 'none';
 
         /* ======================================================================
-           CONEXIÓN CON EL MÓDULO DE FILTRADO (HU-05)
+           CONEXIÓN CON EL MÓDULO DE FILTRADO 
            ====================================================================== */
         /* Pasamos los datos cargados al módulo de filtros para guardarlos en caché */
         setFilteringData(employees);
@@ -145,6 +145,16 @@ togglePasswordButton.addEventListener('click', () => {
 });
 
 // ======================================================================
+// CONEXIÓN DEL BOTÓN DE CIERRE DE SESIÓN
+// ======================================================================
+if (logoutButton) {
+    logoutButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Evitamos comportamiento por defecto del enlace o botón
+        logoutUser(); // Invocamos la función segura que definimos al final del archivo
+    });
+}
+
+// ======================================================================
 // PROCESO ASÍNCRONO DE AUTENTICACIÓN
 // ======================================================================
 
@@ -192,25 +202,6 @@ loginForm.addEventListener('submit', async (event) => {
 });
 
 // ======================================================================
-// LOGOUT DEL DASHBOARD 
-// ======================================================================
-
-logoutButton.addEventListener('click', () => {
-    // 1. Eliminamos la sesión del almacenamiento local (HU-3 T03)
-    clearSession();
-
-    // 2. Limpiamos los campos del formulario de entrada por seguridad
-    loginForm.reset();
-    
-    // 3. Bloqueamos de nuevo el botón azul
-    submitButton.setAttribute('disabled', 'true');
-
-    // 4. REDIRECCIÓN SPA: Ocultamos el Dashboard y volvemos a mostrar el Login (HU-3 T04)
-    dashboardView.setAttribute('hidden', 'true');
-    authView.removeAttribute('hidden');
-});
-
-// ======================================================================
 // RENDERIZADO DINÁMICO DE FILAS (MÓDULO DE INTERFAZ)
 // ======================================================================
 
@@ -242,4 +233,31 @@ function renderEmployeeRows(employeesList) {
         /* Inyectamos la fila completada dentro del cuerpo de la tabla en el DOM */
         employeeTableBody.appendChild(tableRow);
     });
+}
+
+/**
+ * Gestiona el cierre de sesión destruyendo las credenciales del usuario
+ * y reseteando la interfaz de la aplicación.
+ */
+export async function logoutUser() {
+    try {
+        console.log("Cerrando sesión de forma segura...");
+
+        // Limpieza estricta de las credenciales
+        localStorage.removeItem('userToken'); // Si usas este
+        clearSession(); // Limpiamos con tu función de storage.js
+
+        // Reseteo de la interfaz (Estrategia SPA)
+        dashboardView.setAttribute('hidden', 'true'); // Ocultamos el dashboard
+        authView.removeAttribute('hidden');          // Mostramos el login
+
+        // Resetear el formulario de login por seguridad
+        loginForm.reset();
+        
+        console.log("Sesión cerrada y vista reseteada.");
+
+    } catch (error) {
+        console.error("Error crítico durante el proceso de cierre de sesión:", error);
+        alert("No se pudo cerrar la sesión de forma segura. Inténtalo de nuevo.");
+    }
 }
