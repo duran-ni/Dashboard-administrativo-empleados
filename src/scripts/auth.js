@@ -168,7 +168,7 @@ loginForm.addEventListener('submit', async (event) => {
     const passwordValue = passwordInput.value;
 
     try {
-        const response = await fetch('/config.json');
+        const response = await fetch('./config.json');
         
         if (!response.ok) {
             throw new Error('No se pudo verificar la configuración de seguridad local.');
