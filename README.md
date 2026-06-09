@@ -53,6 +53,8 @@ En este proyecto se realizaron los siguientes pasos:
 
 **Paso 6:** Vitest
 
+![Prueba de los tests](src/assets/imgs/tests.png)
+
 
 #  🛠️ Planificación
 
