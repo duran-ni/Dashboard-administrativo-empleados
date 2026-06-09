@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 // Importamos 'aplicarFiltros', que es el nombre real de tu función pura en filters.js
 import { aplicarFiltros } from '../src/scripts/filters.js';
 
-describe('HU-06: Lógica de búsqueda', () => {
+describe('Lógica de búsqueda', () => {
     it('debería filtrar correctamente los empleados por nombre', () => {
         const empleados = [
             { name: 'Ana Garcia' },

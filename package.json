@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "Este proyecto consiste en una aplicación web dinámica de tipo **dashboard administrativo** para la gestión interna de personal. \r La plataforma implementa un sistema de control de acceso privado que protege los datos organizacionales frente a usuarios no autenticados.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "vitest run tests/filters.test.js",
+    "test:watch": "vitest tests/**/*.test.js",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/duran-ni/Dashboard-administrativo-empleados.git"
@@ -19,6 +24,7 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
+    "jsdom": "^29.1.1",
     "vitest": "^4.1.8"
   }
 }
